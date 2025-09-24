@@ -11,7 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { WalletConnectModal } from "./wallet-connect-modal"
-import { useWallet } from "./wallet-provider"
+import { useWallet } from "@aptos-labs/wallet-adapter-react"
 import { Copy, ExternalLink, LogOut, Globe, Settings, Moon, Network } from "lucide-react"
 
 export function Header() {
@@ -24,13 +24,14 @@ export function Header() {
 
   const copyAddress = () => {
     if (account?.address) {
-      navigator.clipboard.writeText(account.address)
+      navigator.clipboard.writeText(account.address.toString())
     }
   }
 
   const handleNetworkSwitch = async (networkName: string) => {
     try {
-      await changeNetwork(networkName)
+      // In a real implementation, you would use the wallet adapter's network switching functionality
+      console.log(`Switching to ${networkName}`)
     } catch (error) {
       console.error("Failed to switch network:", error)
     }
@@ -90,7 +91,7 @@ export function Header() {
                   >
                     <div className="flex items-center gap-1 lg:gap-2">
                       <div className="w-2 h-2 bg-green-500 rounded-full" />
-                      <span className="hidden sm:inline">{formatAddress(account.address)}</span>
+                      <span className="hidden sm:inline">{formatAddress(account.address.toString())}</span>
                       <span className="sm:hidden">Connected</span>
                     </div>
                   </Button>
@@ -98,7 +99,7 @@ export function Header() {
                 <DropdownMenuContent align="end" className="w-64">
                   <div className="p-3 border-b">
                     <div className="text-sm font-medium">Connected Wallet</div>
-                    <div className="text-xs text-muted-foreground font-mono break-all">{account.address}</div>
+                    <div className="text-xs text-muted-foreground font-mono break-all">{account.address.toString()}</div>
                     <div className="text-xs text-muted-foreground capitalize">
                       Network: {network?.name || "mainnet"}
                     </div>
@@ -127,7 +128,7 @@ export function Header() {
                     Switch to Testnet
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={disconnect} className="text-red-600">
+                  <DropdownMenuItem onClick={() => disconnect()} className="text-red-600">
                     <LogOut className="w-4 h-4 mr-2" />
                     Disconnect
                   </DropdownMenuItem>

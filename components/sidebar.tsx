@@ -4,18 +4,34 @@ import { useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
-import { ChevronDown, ChevronRight, Menu, X } from "lucide-react"
+import { 
+  ChevronDown, 
+  ChevronRight, 
+  Menu, 
+  X, 
+  Home,
+  Rocket,
+  Flame,
+  CircleDollarSign,
+  Waves,
+  WalletCards,
+  BookOpen,
+  Sparkles,
+  Zap,
+  Gem,
+  Shield
+} from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 const sidebarItems = [
   {
     title: "Home",
     href: "/",
-    icon: "🏠",
+    icon: Home,
   },
   {
     title: "Newly Launched",
-    icon: "🆕",
+    icon: Rocket,
     children: [
       { title: "New Address Buy (1 Holders)", href: "/tools/new-address-holders" },
       { title: "Sell and Bundled Buy", href: "/tools/sell-bundled-buy" },
@@ -26,7 +42,7 @@ const sidebarItems = [
   },
   {
     title: "Popular Tools",
-    icon: "🔥",
+    icon: Flame,
     children: [
       { title: "Token Creation", href: "/tools/token-creator" },
       { title: "Multi Sender", href: "/tools/multi-sender" },
@@ -38,7 +54,7 @@ const sidebarItems = [
   },
   {
     title: "Token Manage",
-    icon: "🪙",
+    icon: CircleDollarSign,
     children: [
       { title: "Token Creation", href: "/tools/token-creator" },
       { title: "Tax Token Creation", href: "/tools/tax-token-creator" },
@@ -53,7 +69,7 @@ const sidebarItems = [
   },
   {
     title: "Liquidity Manage",
-    icon: "💧",
+    icon: Waves,
     children: [
       { title: "Batch Wallet Generation", href: "/tools/batch-wallet-generation" },
       { title: "Vanity Address Generator", href: "/tools/vanity-address-generator" },
@@ -66,7 +82,7 @@ const sidebarItems = [
   },
   {
     title: "Wallet Manage",
-    icon: "👛",
+    icon: WalletCards,
     children: [
       { title: "Multi Sender", href: "/tools/multi-sender" },
       { title: "Batch Collection", href: "/tools/batch-collection" },
@@ -144,7 +160,7 @@ export function Sidebar() {
                       expandedItems.includes(item.title) && "bg-slate-800",
                     )}
                   >
-                    <span className="text-base">{item.icon}</span>
+                    <item.icon className="w-5 h-5" />
                     <span className="flex-1 text-left">{item.title}</span>
                     {expandedItems.includes(item.title) ? (
                       <ChevronDown className="w-4 h-4" />
@@ -180,7 +196,7 @@ export function Sidebar() {
                     pathname === item.href && "bg-orange-500 hover:bg-orange-600",
                   )}
                 >
-                  <span className="text-base">{item.icon}</span>
+                  <item.icon className="w-5 h-5" />
                   <span>{item.title}</span>
                 </Link>
               )}
@@ -190,7 +206,7 @@ export function Sidebar() {
 
         <div className="p-4">
           <div className="flex items-center gap-2 p-3 bg-slate-800 rounded-lg">
-            <div className="text-2xl">📚</div>
+            <BookOpen className="w-5 h-5" />
             <div>
               <div className="text-sm font-medium">Help Center</div>
               <div className="text-xs text-slate-400">White Paper / User Guide</div>

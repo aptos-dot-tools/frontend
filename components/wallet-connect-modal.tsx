@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
-import { useWallet } from "./wallet-provider"
+import { useWallet } from "@aptos-labs/wallet-adapter-react"
 
 interface WalletConnectModalProps {
   open: boolean
@@ -11,7 +11,7 @@ interface WalletConnectModalProps {
 }
 
 export function WalletConnectModal({ open, onOpenChange }: WalletConnectModalProps) {
-  const { wallets, connect, connecting } = useWallet()
+  const { wallets, connect, isLoading } = useWallet()
   const [selectedWallet, setSelectedWallet] = useState<string | null>(null)
 
   const handleConnect = async (walletName: string) => {
@@ -42,20 +42,24 @@ export function WalletConnectModal({ open, onOpenChange }: WalletConnectModalPro
               variant="outline"
               className="w-full justify-start h-auto p-4 bg-transparent"
               onClick={() => handleConnect(wallet.name)}
-              disabled={connecting}
+              disabled={isLoading}
             >
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-lg overflow-hidden">
-                  <div className="w-full h-full bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center text-2xl">
-                    {wallet.icon}
-                  </div>
+                  {wallet.icon ? (
+                    <img src={wallet.icon} alt={wallet.name} className="w-full h-full object-cover" />
+                  ) : (
+                    <div className="w-full h-full bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center text-2xl">
+                       wallet
+                    </div>
+                  )}
                 </div>
                 <div className="text-left">
                   <div className="font-medium">{wallet.name}</div>
-                  <div className="text-sm text-muted-foreground">{wallet.description}</div>
+                  <div className="text-sm text-muted-foreground">{wallet.name} Wallet</div>
                 </div>
               </div>
-              {connecting && selectedWallet === wallet.name && (
+              {isLoading && selectedWallet === wallet.name && (
                 <div className="ml-auto">
                   <div className="w-4 h-4 border-2 border-orange-500 border-t-transparent rounded-full animate-spin" />
                 </div>
