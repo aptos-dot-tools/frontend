@@ -156,7 +156,7 @@ export default function HomePage() {
         </section>
 
         {/* Newly Launched Section */}
-        <section>
+        {/* <section>
           <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mb-6">
             <div className="flex items-center gap-2">
               <h2 className="text-xl lg:text-2xl font-semibold">Newly Launched</h2>
@@ -172,22 +172,7 @@ export default function HomePage() {
               <ToolCard key={tool.id} {...tool} variant="compact" />
             ))}
           </div>
-        </section>
-
-        {/* Test content to verify scrolling fix */}
-        <div className="mt-12">
-          <h2 className="text-2xl font-bold mb-4">Scrolling Test Content</h2>
-          <p className="mb-4">This is test content to verify that the header and sidebar stay fixed while the main content scrolls.</p>
-          
-          {/* Generate a lot of content to test scrolling */}
-          {Array.from({ length: 20 }).map((_, i) => (
-            <div key={i} className="mb-8 p-4 bg-muted rounded-lg">
-              <h3 className="text-xl font-semibold mb-2">Section {i + 1}</h3>
-              <p className="mb-2">This is test content to verify that the header and sidebar stay fixed while the main content scrolls.</p>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-            </div>
-          ))}
-        </div>
+        </section> */}
       </div>
     </main>
   )
