@@ -29,17 +29,17 @@ const sidebarItems = [
     href: "/",
     icon: Home,
   },
-  {
-    title: "Newly Launched",
-    icon: Rocket,
-    children: [
-      { title: "New Address Buy (1 Holders)", href: "/tools/new-address-holders" },
-      { title: "Sell and Bundled Buy", href: "/tools/sell-bundled-buy" },
-      { title: "Bundled Buy", href: "/tools/bundled-buy" },
-      { title: "MoonShot Section", href: "/tools/moonshot-section" },
-      { title: "Multi-to-Multi Transfer", href: "/tools/multi-transfer" },
-    ],
-  },
+  // {
+  //   title: "Newly Launched",
+  //   icon: Rocket,
+  //   children: [
+  //     { title: "New Address Buy (1 Holders)", href: "/tools/new-address-holders" },
+  //     { title: "Sell and Bundled Buy", href: "/tools/sell-bundled-buy" },
+  //     { title: "Bundled Buy", href: "/tools/bundled-buy" },
+  //     { title: "MoonShot Section", href: "/tools/moonshot-section" },
+  //     { title: "Multi-to-Multi Transfer", href: "/tools/multi-transfer" },
+  //   ],
+  // },
   {
     title: "Popular Tools",
     icon: Flame,
