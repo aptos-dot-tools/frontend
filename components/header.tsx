@@ -54,7 +54,7 @@ export function Header() {
           {/* Left side - Enhanced branding */}
           <div className="flex items-center gap-4 flex-1 min-w-0">
             <div className="flex items-center gap-3">
-              <div className="flex items-center gap-2">
+              {/* <div className="flex items-center gap-2">
                 <div className="w-8 h-8 bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg flex items-center justify-center shadow-lg">
                   <span className="text-white text-sm font-bold">A</span>
                 </div>
@@ -64,7 +64,7 @@ export function Header() {
                   </div>
                   <div className="text-xs text-muted-foreground -mt-1">Developer Toolkit</div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
 

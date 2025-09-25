@@ -136,14 +136,15 @@ export function Sidebar() {
 
         <div className="p-4 border-b border-slate-700">
           <Link href="/" className="flex items-center gap-3" onClick={closeMobile}>
-            <div className="w-8 h-8 bg-gradient-to-br from-orange-400 to-orange-600 rounded-lg flex items-center justify-center">
+            {/* <div className="w-8 h-8 bg-gradient-to-br from-orange-400 to-orange-600 rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-lg">A</span>
-            </div>
+            </div> */}
             <div>
               <div className="text-xl font-bold bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent">
-                aptos.tools
+                <img className="w-50" src="/new-logo.png" alt="" />
               </div>
-              <div className="text-xs text-slate-400">Developer Toolkit</div>
+              
+              {/* <div className="text-xs text-slate-400">Developer Toolkit</div> */}
             </div>
           </Link>
         </div>
