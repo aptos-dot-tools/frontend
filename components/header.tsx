@@ -1,22 +1,16 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useRef, useEffect } from "react"
 import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 import { WalletConnectModal } from "./wallet-connect-modal"
 import { useWallet } from "@aptos-labs/wallet-adapter-react"
-import { Copy, ExternalLink, LogOut, Globe, Settings, Moon, Network } from "lucide-react"
+import { Copy, ExternalLink, LogOut, Network } from "lucide-react"
 
 export function Header() {
   const [showWalletModal, setShowWalletModal] = useState(false)
-  const { connected, account, network, disconnect, changeNetwork } = useWallet()
+  const [showDropdown, setShowDropdown] = useState(false)
+  const dropdownRef = useRef<HTMLDivElement>(null)
+  const { connected, account, network, disconnect } = useWallet()
 
   const formatAddress = (addr: string) => {
     return `${addr.slice(0, 6)}...${addr.slice(-4)}`
@@ -25,6 +19,7 @@ export function Header() {
   const copyAddress = () => {
     if (account?.address) {
       navigator.clipboard.writeText(account.address.toString())
+      setShowDropdown(false)
     }
   }
 
@@ -32,10 +27,25 @@ export function Header() {
     try {
       // In a real implementation, you would use the wallet adapter's network switching functionality
       console.log(`Switching to ${networkName}`)
+      setShowDropdown(false)
     } catch (error) {
       console.error("Failed to switch network:", error)
     }
   }
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setShowDropdown(false)
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside)
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside)
+    }
+  }, [])
 
   return (
     <>
@@ -56,19 +66,10 @@ export function Header() {
                 </div>
               </div>
             </div>
-
-            <div className="hidden lg:flex items-center gap-2 text-sm text-muted-foreground overflow-hidden">
-              <span className="flex-shrink-0">💡</span>
-              <span className="truncate">Professional-grade tools for Aptos blockchain development</span>
-            </div>
           </div>
 
           {/* Right side - Controls */}
           <div className="flex items-center gap-2 lg:gap-4 flex-shrink-0">
-            <Badge variant="default" className="bg-green-500 hover:bg-green-600 hidden sm:inline-flex">
-              NEW
-            </Badge>
-
             <div className="flex items-center gap-2">
               <div
                 className={`w-6 h-6 lg:w-8 lg:h-8 rounded-full flex items-center justify-center ${
@@ -83,80 +84,80 @@ export function Header() {
             </div>
 
             {connected && account ? (
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button
-                    variant="outline"
-                    className="bg-green-50 border-green-200 hover:bg-green-100 text-xs lg:text-sm"
-                  >
-                    <div className="flex items-center gap-1 lg:gap-2">
-                      <div className="w-2 h-2 bg-green-500 rounded-full" />
-                      <span className="hidden sm:inline">{formatAddress(account.address.toString())}</span>
-                      <span className="sm:hidden">Connected</span>
+              <div className="relative" ref={dropdownRef}>
+                <Button
+                  variant="outline"
+                  className="bg-green-50 border-green-200 hover:bg-green-100 text-xs lg:text-sm cursor-pointer"
+                  onClick={() => setShowDropdown(!showDropdown)}
+                >
+                  <div className="flex items-center gap-1 lg:gap-2">
+                    <div className="w-2 h-2 bg-green-500 rounded-full" />
+                    <span className="hidden sm:inline">{formatAddress(account.address.toString())}</span>
+                    <span className="sm:hidden">Connected</span>
+                  </div>
+                </Button>
+
+                {showDropdown && (
+                  <div className="absolute right-0 mt-2 w-64 bg-white border rounded-md shadow-lg z-[1000]">
+                    <div className="p-3 border-b">
+                      <div className="text-sm font-medium">Connected Wallet</div>
+                      <div className="text-xs text-muted-foreground font-mono break-all">{account.address.toString()}</div>
+                      <div className="text-xs text-muted-foreground capitalize">
+                        Network: {network?.name || "mainnet"}
+                      </div>
                     </div>
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-64">
-                  <div className="p-3 border-b">
-                    <div className="text-sm font-medium">Connected Wallet</div>
-                    <div className="text-xs text-muted-foreground font-mono break-all">{account.address.toString()}</div>
-                    <div className="text-xs text-muted-foreground capitalize">
-                      Network: {network?.name || "mainnet"}
+                    <div 
+                      className="flex items-center gap-2 px-3 py-2 text-sm cursor-pointer hover:bg-gray-100"
+                      onClick={copyAddress}
+                    >
+                      <Copy className="w-4 h-4 mr-2" />
+                      Copy Address
+                    </div>
+                    <div 
+                      className="flex items-center gap-2 px-3 py-2 text-sm cursor-pointer hover:bg-gray-100"
+                      onClick={() => {
+                        setShowDropdown(false)
+                        // Add explorer link functionality here
+                      }}
+                    >
+                      <ExternalLink className="w-4 h-4 mr-2" />
+                      View on Explorer
+                    </div>
+                    <div className="border-t my-1"></div>
+                    <div 
+                      className={`flex items-center gap-2 px-3 py-2 text-sm cursor-pointer hover:bg-gray-100 ${network?.name === "mainnet" ? "opacity-50" : ""}`}
+                      onClick={() => handleNetworkSwitch("mainnet")}
+                    >
+                      <Network className="w-4 h-4 mr-2" />
+                      Switch to Mainnet
+                    </div>
+                    <div 
+                      className={`flex items-center gap-2 px-3 py-2 text-sm cursor-pointer hover:bg-gray-100 ${network?.name === "testnet" ? "opacity-50" : ""}`}
+                      onClick={() => handleNetworkSwitch("testnet")}
+                    >
+                      <Network className="w-4 h-4 mr-2" />
+                      Switch to Testnet
+                    </div>
+                    <div className="border-t my-1"></div>
+                    <div 
+                      className="flex items-center gap-2 px-3 py-2 text-sm text-red-600 cursor-pointer hover:bg-gray-100"
+                      onClick={() => {
+                        disconnect()
+                        setShowDropdown(false)
+                      }}
+                    >
+                      <LogOut className="w-4 h-4 mr-2" />
+                      Disconnect
                     </div>
                   </div>
-                  <DropdownMenuItem onClick={copyAddress}>
-                    <Copy className="w-4 h-4 mr-2" />
-                    Copy Address
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <ExternalLink className="w-4 h-4 mr-2" />
-                    View on Explorer
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem
-                    onClick={() => handleNetworkSwitch("mainnet")}
-                    disabled={network?.name === "mainnet"}
-                  >
-                    <Network className="w-4 h-4 mr-2" />
-                    Switch to Mainnet
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={() => handleNetworkSwitch("testnet")}
-                    disabled={network?.name === "testnet"}
-                  >
-                    <Network className="w-4 h-4 mr-2" />
-                    Switch to Testnet
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={() => disconnect()} className="text-red-600">
-                    <LogOut className="w-4 h-4 mr-2" />
-                    Disconnect
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+                )}
+              </div>
             ) : (
               <Button variant="outline" size="sm" onClick={() => setShowWalletModal(true)}>
                 <span className="hidden sm:inline">Connect Wallet</span>
                 <span className="sm:hidden">Connect</span>
               </Button>
             )}
-
-            <div className="flex items-center gap-1">
-              <Button variant="ghost" size="sm" className="w-8 h-8 p-0">
-                <Globe className="w-4 h-4" />
-              </Button>
-              <Button variant="ghost" size="sm" className="w-8 h-8 p-0">
-                <Settings className="w-4 h-4" />
-              </Button>
-              <Button variant="ghost" size="sm" className="w-8 h-8 p-0">
-                <Moon className="w-4 h-4" />
-              </Button>
-            </div>
-
-            <div className="hidden lg:flex items-center gap-2 text-sm">
-              <span>🤖</span>
-              <span>AptA...mdRP</span>
-            </div>
           </div>
         </div>
       </header>
