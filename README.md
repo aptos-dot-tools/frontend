@@ -1,30 +1,31 @@
-# Aptos tool frontend
+# 🌐 Aptos.Tools
 
-*Automatically synced with your [v0.app](https://v0.app) deployments*
+**Aptos.Tools** is the all-in-one toolkit for the Aptos blockchain.  
+A Swiss Army knife for builders, traders, and communities — no deep Move knowledge required.
 
-[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/developers-projects-cf76b466/v0-aptos-tool-frontend)
-[![Built with v0](https://img.shields.io/badge/Built%20with-v0.app-black?style=for-the-badge)](https://v0.app/chat/projects/RKKPTjNur5J)
+---
 
-## Overview
+## 🎯 Features
 
-This repository will stay in sync with your deployed chats on [v0.app](https://v0.app).
-Any changes you make to your deployed app will be automatically pushed to this repository from [v0.app](https://v0.app).
+- **Transaction Simulator** – dry-run, gas estimator, error analyzer  
+- **Token Tools** – create tokens, lock/burn LP, migrate contracts  
+- **Wallet & Airdrops** – bulk wallet generator, CSV-based airdrops, snapshots  
+- **Bulk Trading** – multi-wallet buy/sell, sniping, arbitrage  
+- **Analytics Dashboard** – portfolio, whale tracker, token distribution  
+- **APIs & SDKs** – REST + CLI for developers  
 
-## Deployment
+---
 
-Your project is live at:
+## 🚀 Advanced Tools (Future)
 
-**[https://vercel.com/developers-projects-cf76b466/v0-aptos-tool-frontend](https://vercel.com/developers-projects-cf76b466/v0-aptos-tool-frontend)**
+- MEV-resistant trading bundles  
+- Gas optimization engine  
+- AI transaction explainer  
+- Auto-liquidity manager  
+- Cross-chain bridge helper  
 
-## Build your app
+---
 
-Continue building your app on:
+## 🏗 Tech Stack
 
-**[https://v0.app/chat/projects/RKKPTjNur5J](https://v0.app/chat/projects/RKKPTjNur5J)**
-
-## How It Works
-
-1. Create and modify your project using [v0.app](https://v0.app)
-2. Deploy your chats from the v0 interface
-3. Changes are automatically pushed to this repository
-4. Vercel deploys the latest version from this repository
+- **Frontend:** Next.js +
